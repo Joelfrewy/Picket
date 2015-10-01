@@ -1,0 +1,66 @@
+<div ng-include src="'nav.html'"></div>
+<div ng-controller="itemsettings">
+  
+
+  
+<table class="table table-striped">
+  <thead>  
+  <tr>
+    <th>Item</th>
+    <th>Ship</th>
+    <th>Section</th>
+    <th>Min Days</th>
+    <th>Max Days</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="row in rows | orderBy:'-isAdmin'">
+    <td>{{row.name}}</td>
+    <td>{{row.ship}}</td>
+    <td>{{row.section}}</td>
+    <td>{{row.minDays}}</td>
+    <td>{{row.maxDays}}</td>
+    <td ng-hide="row.isAdmin"><button class="btn btn-danger glyphicon glyphicon-trash" ng-click="delete(row.id)"></button></td>
+  </tr>
+  
+  
+  </tbody>
+  </table>
+  
+  <table class="table">
+  <tbody>
+    <tr ng-hide="adding">
+    <td><button class="btn btn-default" ng-click="startadd()">New Item</button></td>
+    <td></td><td></td><td></td><td></td><td></td>
+  </tr>
+  <tr ng-show="adding">
+    <td>
+      <input type="text" class="form-control" ng-model="addname" placeholder="Item">
+    </td>
+    <td>
+      <form class="form-inline">
+      <select class="form-control" ng-model="addship" ng-options="ship for ship in ships">
+      </select>
+      </form>
+    </td>
+    <td>
+      <form class="form-inline">
+      <select class="form-control" ng-model="addsection" ng-options="section for section in sections">
+      </select>
+      </form>
+    </td>
+    <td>
+      <input type="number" class="form-control" ng-model="addmindays">
+    </td>
+    <td>
+      <input type="number" class="form-control" ng-model="addmaxdays">
+    </td>
+    <td>
+      <button class="btn btn-default" ng-click="add()">Add</button>
+      <button class="btn btn-default glyphicon glyphicon-remove" ng-click="stopadd()"></button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,61 @@
+<div ng-include src="'nav.html'"></div>
+<div ng-controller="usersettings">
+  
+
+  
+<table class="table table-striped">
+  <thead>  
+  <tr>
+    <th>Email</th>
+    <th>Ship</th>
+    <th>Change Password</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="row in rows | orderBy:'-isAdmin'">
+    <td>{{row.email}}</td>
+    <td>{{row.ship}}</td>
+    <td ng-hide="row.isAdmin || changingpassword"><button class="btn btn-primary glyphicon glyphicon-lock" ng-click="startChangePassword()"></button></td>
+    <td ng-hide="row.isAdmin || !changingpassword"><form class="form-inline"><div class="row">
+      <input type="password" class="form-control" ng-model="password" placeholder="new password">
+      <button class="btn btn-default" ng-click="changePassword(row.id, password)">Save</button>
+      <button class="btn btn-default glyphicon glyphicon-remove" ng-click="stopChangePassword()"></button>
+    </div></form></td>
+    <td ng-hide="row.isAdmin"><button class="btn btn-danger glyphicon glyphicon-trash" ng-click="delete(row.id)"></button></td>
+    <td ng-show="row.isAdmin">-</td><td ng-show="row.isAdmin">-</td>
+  </tr>
+  
+  
+  </tbody>
+  </table>
+  
+  <table class="table">
+  <tbody>
+    <tr ng-hide="adding">
+    <td><button class="btn btn-default" ng-click="startadd()">New {{type}}</button></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr ng-show="adding">
+    <td>
+      <input type="text" class="form-control" ng-model="addemail" placeholder="Email">
+    </td>
+    <td>
+      <form class="form-inline">
+      <select class="form-control" ng-model="addship" ng-options="ship for ship in ships">
+      </select>
+      </form>
+    </td>
+    <td>
+      <input type="password" class="form-control" ng-model="addpassword" placeholder="Password">
+    </td>
+    <td>
+      <button class="btn btn-default" ng-click="add()">Add</button>
+      <button class="btn btn-default glyphicon glyphicon-remove" ng-click="stopadd()"></button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</div>

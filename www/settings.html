@@ -1,0 +1,39 @@
+<div ng-include src="'nav.html'"></div>
+<div ng-controller="settings">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>{{type}}</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in rows">
+        <td>{{row.name}}</td>
+        <td>
+          <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="delete($index)"></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table">
+    <tbody>
+      <tr ng-hide="adding">
+        <td>
+          <button class="btn btn-default" ng-click="startadd()">New {{type}}</button>
+        </td>
+        <td></td>
+      </tr>
+      <tr ng-show="adding">
+        <td>
+          <input type="text" class="form-control" ng-model="addname" placeholder="Name">
+        </td>
+        <td>
+          <button class="btn btn-default" ng-click="add()">Add</button>
+          <button class="btn btn-default glyphicon glyphicon-remove" ng-click="stopadd()"></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

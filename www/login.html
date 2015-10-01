@@ -1,0 +1,23 @@
+<div ng-controller="loginctrl">
+<div class="modal-body">
+  <div class="well">
+    <div class="row">
+      <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6 col-xs-12">
+    <form>
+      <h2>Login</h2>
+      <br />
+      <div ng-show="invalid" class="alert alert-danger" role="alert">Invalid Username/Password</div>
+    
+      <input type="text" class="form-control" placeholder="Email" ng-model="user.username" />
+      <br />
+      <input type="password" class="form-control" placeholder="Password" ng-model="user.password" />
+      <br />
+      <button type="submit" class="btn btn-success btn-block" ng-click="logIn(user)">Log in</button>
+    </form>
+        </div>
+  </div>
+  </div>
+</div>
+</div>

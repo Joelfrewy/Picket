@@ -1,0 +1,88 @@
+<div ng-include src="'nav.html'"></div>
+<div ng-controller="ctrl">
+
+  
+  <div class="container-fluid">
+  <form class="form-group">
+    <div class="row">
+      
+      
+      <div class="col-sm-6 col-xs-12">
+      <span ng-show="isAdmin" class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span ng-show="shipfilter===''">All Ships</span><span ng-hide="shipfilter===''">{{shipfilter}}</span>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li ng-click="filter(0,'')"><a>All Ships</a></li>
+      <li ng-repeat="ship in ships"><a ng-click="filter(0,ship)">{{ship}}</a></li>
+    </ul>
+</span>
+      
+      <span class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span ng-show="sectionfilter===''">All Sections</span><span ng-hide="sectionfilter===''">{{sectionfilter}}</span>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a ng-click="filter(1,'')">All Sections</a></li>
+      <li ng-repeat="section in sections"><a ng-click="filter(1,section)">{{section}}</a></li>
+    </ul>
+  </span>
+</div>
+<div class="col-sm-4 col-sm-offset-2 col-xs-12">
+        <input type="text" class="form-control" placeholder="Search" ng-model="search" />
+      </div>
+      </div>
+  </form>
+  <div style="overflow-x:scroll;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th ng-show="isAdmin" class="hover" style="width:100px" ng-click="changeorder('ship')">
+        <h4>Ship <span ng-show="ordering=='ship'" class="caret"></span>
+        <span ng-show="ordering=='-ship'" class="dropup"><span class="caret"></span></span></h4></th>
+        <th class="hover" style="width:100px" ng-click="changeorder('section')">
+        <h4>Section <span ng-show="ordering=='section'" class="caret"></span>
+        <span ng-show="ordering=='-section'" class="dropup"><span class="caret"></span></span></h4></th>
+      <th class="hover" style="width:100px" ng-click="changeorder('item')">
+        <h4>Item <span ng-show="ordering=='item'" class="caret"></span>
+        <span ng-show="ordering=='-item'" class="dropup"><span class="caret"></span></span></h4></th>
+      <th class="hover" style="width:100px" ng-click="changeorder('lastchecked')">
+        <h4>Last Checked <span ng-show="ordering=='lastchecked'" class="caret"></span>
+        <span ng-show="ordering=='-lastchecked'" class="dropup"><span class="caret"></span></span></h4></th>
+      <th class="hover" style="width:100px" ng-click="changeorder('nextcheck')">
+        <h4>Next Check <span ng-show="ordering=='nextcheck'" class="caret"></span>
+        <span ng-show="ordering=='-nextcheck'" class="dropup"><span class="caret"></span></span></h4></th>
+      <th class="hover" style="width:100px" ng-click="changeorder('-status')">
+        <h4>Status <span ng-show="ordering=='-status'" class="caret"></span>
+        <span ng-show="ordering=='status'" class="dropup"><span class="caret"></span></span></h4></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="hover" ng-click="go(row.id)" dir-paginate="row in rows | filter:{item:search}:strict |filter:{section:sectionfilter}:exceptEmptyStrictComparator |filter:{ship:shipfilter}:exceptEmptyStrictComparator | orderBy:ordering |itemsPerPage:10">
+        <td ng-show="isAdmin">{{row.ship}}</td>
+        <td>{{row.section}}</td>
+        <td>{{row.item}}</td>
+        <td>{{row.lastchecked.getDate()}} {{monthNames[row.lastchecked.getMonth()]}} {{row.lastchecked.getFullYear()}}</td>
+        <td>{{row.nextcheck.getDate()}} {{monthNames[row.nextcheck.getMonth()]}} {{row.nextcheck.getFullYear()}}</td>
+        <td ng-show="row.status == 2">
+          <div style="color:#D9534F;" class="glyphicon glyphicon-exclamation-sign"></div>
+        </td>
+        <td ng-show="row.status == 1">
+          <div style="color:#F0AD4E" class="glyphicon glyphicon-alert"></div>
+        </td>
+        <td ng-show="row.status == 0">
+          <div style="color:#5CB85C" class="glyphicon glyphicon-ok"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <dir-pagination-controls
+        max-size="10"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div ng-include src="'nav.html'"></div>
+<div ng-controller="itemctrl">
+  
+<div class="container-fluid">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="col-xs-4">Ship</th>
+          <th class="col-xs-4">Section</th>
+          <th class="col-xs-4">Item</th>
+          <th class="col-xs-4">Next Check</th>
+          <th class="col-xs-4">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-xs-4">{{ship}}</td>
+          <td class="col-xs-4">{{section}}</td>
+          <td class="col-xs-4">{{item}}</td>
+          <td class="col-xs-4">{{nextcheck.getDate()}} {{monthNames[nextcheck.getMonth()]}} {{nextcheck.getFullYear()}}</td>
+          <td ng-show="status==0" class="col-xs-4 success">Up To Date</td>
+          <td ng-show="status==1" class="col-xs-4 warning">Check Required</td>
+          <td ng-show="status==2" class="col-xs-4 danger">Overdue</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="container-fluid">
+    <button class="btn btn-default" ng-click="back()">Back</button>
+    <button class="btn btn-default" ng-click="startadd()" ng-hide="adding">Add</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="hover col-xs-4" ng-click="changeorder('date')">
+            <h4>Date <span ng-show="ordering=='date'" class="caret"></span>
+        <span ng-show="ordering=='-date'" class="dropup"><span class="caret"></span></span></h4></th>
+          <th class="hover col-xs-4" ng-click="changeorder('comment')">
+            <h4>Comment <span ng-show="ordering=='comment'" class="caret"></span>
+        <span ng-show="ordering=='-comment'" class="dropup"><span class="caret"></span></span></h4></th>
+          <th class="hover col-xs-4" ng-click="changeorder('user')">
+            <h4>By <span ng-show="ordering=='user'" class="caret"></span>
+        <span ng-show="ordering=='-user'" class="dropup"><span class="caret"></span></span></h4></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-show="adding">
+          <td class="col-xs-4">{{date.getDate()}} {{monthNames[date.getMonth()]}} {{date.getFullYear()}}</td>
+          <td class="col-xs-4">
+            <textarea type="text" class="form-control" placeholder="New Comment" ng-model="comment"></textarea>
+          </td>
+          <td class="col-xs-4">
+            <button class="btn btn-default" ng-click="add(comment);comment=''">Add</button>
+          </td>
+        </tr>
+        <tr dir-paginate="check in checks | orderBy:ordering |itemsPerPage:10">
+          <td class="col-xs-4">{{check.date.getDate()}} {{monthNames[check.date.getMonth()]}} {{check.date.getFullYear()}}</td>
+          <td class="col-xs-4">{{check.comment}}</td>
+          <td class="col-xs-4">{{check.user}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <dir-pagination-controls
+        max-size="10"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+    </div>
+</div>
